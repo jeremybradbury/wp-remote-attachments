@@ -1,0 +1,2 @@
+# wp-remote-attachments
+Allows you to point your local machine, dev and test servers at production uploads folder. This way you don't need to deal with broken links or copying images to other servers. No need to sync uploads to the test server, just look in one place for ALL images. And since the single setting is simply a FQ path to a public upload directory, this can stay activated AND use the same settings as Dev/Test.
