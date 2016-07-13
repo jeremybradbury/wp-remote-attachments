@@ -1,9 +1,10 @@
 <?php
 /*
  Plugin Name: Remote Attachments
- Plugin URI: https://github.com/jeremybradbury/wp-remote-attachments
- Description: Allows local/dev/production to all use the same production "attachments" aka: uploads/images. Point your local machine, dev and test servers at production uploads folder. You don't need to deal with broken links or copying images to other servers. No need to sync 'uploads' to the test server, just look in one place for ALL images. Since the single setting is simply a FQ path to a public upload directory, this can stay activated AND use the same settings as Dev/Test.
- Version: 0.0.1
+ Plugin URI: http://github.com/jeremybradbury/wp-remote-attachments
+ Description: Allows local/dev/production all use production "attachments" aka: media/images.
+  						Now supports responsive images (srcset)!
+ Version: 0.0.2
  Author: <a href="http://github.com/jeremybradbury">Jeremy Bradbury</a>
  Author URI: http://github.com/jeremybradbury
  */
@@ -30,7 +31,15 @@ class RemoteAttachments
 		//menu
 		add_action('admin_menu', array(__CLASS__, 'plugin_menu'));
 		//frontend filter,filter on image only
-		add_filter('wp_get_attachment_url', array(__CLASS__, 'replace_baseurl'), -999);
+		add_filter('wp_get_attachment_url', array(__CLASS__, 'replace_baseurl'), 1);
+		add_filter( 'wp_calculate_image_srcset', function( $sources ) {
+    			foreach( $sources as &$source )
+    			{
+        			if( isset( $source['url'] ) ) $source['url'] = self::replace_baseurl($source['url']);
+    			}
+    			return $sources;
+		}, PHP_INT_MAX );
+
 	}
 	private static function update_options()
 	{
