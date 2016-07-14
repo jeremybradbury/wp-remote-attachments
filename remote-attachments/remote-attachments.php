@@ -20,7 +20,7 @@ class RemoteAttachments
 	const textdomain = 'remote-attachment';
 	const plugin_name = 'Remote Attachment';
 	const opt_primary = 'remote_attachment_options';
-	const version = '0.0.1';
+	const version = '0.0.2';
 	private static $remote_url = '';
 	private static $remote_baseurl = '';
 	private static $local_url = '';
